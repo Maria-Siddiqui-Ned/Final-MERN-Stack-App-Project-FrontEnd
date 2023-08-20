@@ -5,26 +5,38 @@ import { storage } from '../utils/FirebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from 'axios';
 import { AppRoute } from '../../App';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function BrandModal({recallData}) {
     const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     const [BrandName, setBrandName] = useState("")
+    const [BrandCategory, setBrandCategory] = useState("")
     const [BrandImage, setBrandImage] = useState(null)
 
-    const AddCategory = (e) => {
+ //API VALUES 
+ const [brandVal, setBrandVal] = useState([])
+ const [CategoryVal, setCategoryVal] = useState([])
+
+ const handleClose = () => setShow(false);
+ const handleShow = () => {
+    
+         axios.get('http://localhost:1234/api/get-all-categories').then(json => {
+             setCategoryVal(json.data.category)
+             setShow(true);
+        
+     }).catch(err => console.log(err))
+
+ }
+
+
+    const AddBrand = (e) => {
         e.preventDefault();
-
-
-
         const storageRef = ref(storage, `images/brand/${BrandImage.name}`);
         uploadBytes(storageRef, BrandImage).then((snapshot) => {
             getDownloadURL(snapshot.ref)
                 .then((url) => {
-                    const payload = { BrandName, BrandImage: url }
+                    const payload = { BrandName, BrandCategory, BrandImage: url }
                     axios.post('http://localhost:1234/api/add-brand', payload)
                         .then((json) => {
                             setShow(false);
@@ -66,6 +78,19 @@ function BrandModal({recallData}) {
 
                         </div>
 
+                        <div className="col">
+                                <Form.Group className="mb-3" >
+                                    <FloatingLabel controlId="selectCategory" label="Select Category">
+                                        <Form.Select aria-label="Please Select a Category" onChange={(e) => setBrandCategory(e.target.value)}>
+                                            <option>Please Select a Category</option>
+                                            {
+                                                CategoryVal.map((val, key) => <option key={key} value={val.CategoryName}>{val.CategoryName}</option>)
+                                            }
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </Form.Group>
+                            </div>
+                            
                         <div className="mb-3">
                             <label htmlFor="formFile" className="form-label">
                             Brand Image
@@ -75,7 +100,7 @@ function BrandModal({recallData}) {
 
 
 
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btn-warning">
                             Submit
                         </button>
                     </form>

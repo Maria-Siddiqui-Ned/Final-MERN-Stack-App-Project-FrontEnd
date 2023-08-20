@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CategoryModal from '../components/CategoryModal'
+import BrandModal from '../components/BrandModal'
 import axios from 'axios'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { AiFillDelete } from 'react-icons/ai'
@@ -8,8 +8,8 @@ export default function Brand() {
     const [brand, setBrand] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:1234/api/get-all-categories')
-            .then((json) => setCategory(json.data.brand))
+        axios.get('http://localhost:1234/api/get-all-brands')
+            .then((json) => setBrand(json.data.brand))
             .catch((err) => console.log(err))
 
     }, [])
@@ -21,7 +21,7 @@ export default function Brand() {
     return (
         <div className="container">
             <div className="d-flex justify-content-between align-items-center bg-warning p-2 my-3 rounded">
-                <span className='fs-4 fw-bold'>Brands Section</span>
+                <span className='fs-4 fw-bold'>Brand Section</span>
                 <BrandModal recallData={setBrand} />
             </div>
 
@@ -32,6 +32,7 @@ export default function Brand() {
                             <th scope="col">ID</th>
                             <th scope="col">Brand Name</th>
                             <th scope="col">Brand Logo</th>
+                            <th scope="col">Brand Category</th>
                             <th scope="col">Actions</th>
 
 
@@ -44,6 +45,7 @@ export default function Brand() {
                                     <th scope="row">{val._id}</th>
                                     <td>{val.BrandName}</td>
                                     <td><img src={val.BrandImage} className='img-fluid' style={{ height: '5vh', objectFit: 'contain' }} alt="" srcSet="" /></td>
+                                    <td>{val.BrandCategory}</td>
                                     <td>
                                         <button className="btn btn-dark mx-1"><BsFillPencilFill /></button>
                                         <button className="btn btn-dark mx-1" onClick={() => deleteProduct(val.BrandName)}><AiFillDelete /></button>
@@ -51,6 +53,7 @@ export default function Brand() {
                                 </tr>)
                         }
 
+                                    
 
 
                     </tbody>

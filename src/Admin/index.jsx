@@ -3,6 +3,8 @@ import Sidebar from './components/Sidebar'
 import Home from './pages/Home'
 import Category from './pages/Category'
 import Products from './pages/Products'
+import Brands from './pages/Brands'
+
 import { Route, Routes } from "react-router-dom";
 
 export default function Admin() {
@@ -16,6 +18,7 @@ export default function Admin() {
                     <Route path="/" element={<Home />} />
                     <Route path="/category" element={<Category />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/brands" element={<Brands />} />
 
                     <Route path="*" element={<Home />} />
                 </Routes>

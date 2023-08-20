@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ProductModal from '../components/ProductModal'
 import axios from 'axios'
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+import { AiFillDelete } from 'react-icons/ai'
+import { BsFillPencilFill } from 'react-icons/bs'
+
 import { AppRoute } from '../../App'
 
 export default function Products() {
@@ -46,8 +48,8 @@ export default function Products() {
                             <th scope="col">Category</th>
                             <th scope="col">Brand</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Images</th>
+                            <th  width={"30%"} scope="col">Description</th>
+                            <th  width={"30%"} scope="col">Images</th>
                             <th scope="col">Actions</th>
 
                         </tr>
@@ -56,13 +58,13 @@ export default function Products() {
                         {
                             Product.map((val, key) =>
                                 <tr key={key}>
-                                    <td width={100}><img src={val.ProductThumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
+                                    <td><img src={val.ProductThumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
                                     <td>{val.ProductName}</td>
                                     <td>{val.ProductCategory}</td>
                                     <td>{val.ProductBrand}</td>
                                     <td>Rs. {val.ProductPrice}</td>
-                                    <td width={500}>{val.ProductDescription}</td>
-                                    <td width={300}>
+                                    <td>{val.ProductDescription}</td>
+                                    <td>
                                         <img src={val.ProductImageArray[0]} className='img-fluid rounded-circle border border-secondary m-2' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet=""/>
                                         <img src={val.ProductImageArray[1]} className='img-fluid rounded-circle border border-secondary m-2' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet=""/>
                                         <img src={val.ProductImageArray[2]} className='img-fluid rounded-circle border border-secondary m-2' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet=""/>
@@ -70,8 +72,8 @@ export default function Products() {
                                         </td>
                                     {/* <td>{val.ProductDescription.length < 20 ? val.description : val.description.substring(0, 20) + "..."}</td> */}
                                     <td className='d-flex justify-content-between'>
-                                        <button className="btn btn-dark m-1"><AiOutlineEdit /></button>
-                                        <button className="btn btn-dark m-1" onClick={() => deleteproduct(val._id)}><AiOutlineDelete /></button>
+                                    <button className="btn btn-dark mx-1"><BsFillPencilFill /></button>
+                                        <button className="btn btn-dark mx-1" onClick={() => deleteproduct(val._id)}><AiFillDelete /></button>
                                     </td>
 
                                 </tr>)

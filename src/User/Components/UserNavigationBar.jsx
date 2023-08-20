@@ -5,26 +5,27 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../Context/context'
 import Cookies from 'js-cookie';
-export default function UserNav() {
+import { BsCart4 } from 'react-icons/bs'
+export default function UserNavigationBar() {
 
     const { state, dispatch } = useContext(GlobalContext)
 
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" bg="warning">
             <Container>
-                <Link className='navbar-brand' to='/'>MartPk</Link>
+            <Link className='navbar-brand' to="/"><BsCart4 />Let's ShopPk</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mx-auto">
+                    <Nav className="ms-auto">
                         <Link to='/brands' className='nav-link'>Brands</Link>
                         <Link to='/products' className='nav-link'>Products</Link>
                         <Link to='/category' className='nav-link'>Category</Link>
                     </Nav>
 
                     <div className="d-flex gap-3">
-                        <Link to='/profile' className="btn btn-outline-dark d-flex align-items-center gap-3">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" style={{ height: '3vh', objectFit: 'contain' }} alt="" />
+                        <Link to='#' className="btn btn-outline-dark d-flex align-items-center gap-3">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" style={{ height: '4vh', objectFit: 'contain' }} alt="" />
                             Profile
                         </Link>
 
@@ -41,3 +42,5 @@ export default function UserNav() {
         </Navbar>
     )
 }
+
+

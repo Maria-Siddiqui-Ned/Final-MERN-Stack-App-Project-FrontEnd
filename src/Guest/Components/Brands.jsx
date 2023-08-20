@@ -11,9 +11,6 @@ export default function Brand() {
             .catch(err => alert(err.message))
     }, [])
 
-
-
-
     return (
         <div className="container my-5">
             <div className="text-center">

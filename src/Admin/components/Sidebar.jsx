@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { FiHome } from 'react-icons/fi'
 import { BiCategoryAlt } from 'react-icons/bi'
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md'
+import { TbBrandGooglePhotos } from 'react-icons/tb'
 import { BsCart4 } from 'react-icons/bs'
 import { Link, useLocation } from 'react-router-dom'
 import { GlobalContext } from '../../Context/context'
@@ -25,6 +26,11 @@ export default function Sidebar() {
             tab: "Products",
             url: "/products",
             icon: <MdOutlineProductionQuantityLimits />
+        },
+        {
+            tab: "Brands",
+            url: "/brands",
+            icon: <TbBrandGooglePhotos />
         },
 
     ]

@@ -27,9 +27,9 @@ function ProductModal() {
     const handleClose = () => setShow(false);
     const handleShow = () => {
         axios.get('http://localhost:1234/api/get-all-brands').then(json => {
-            setBrandVal(json.data.brands)
+            setBrandVal(json.data.brand)
             axios.get('http://localhost:1234/api/get-all-categories').then(json => {
-                setCategoryVal(json.data.categories)
+                setCategoryVal(json.data.category)
                 setShow(true);
             })
         }).catch(err => console.log(err))
@@ -43,9 +43,6 @@ function ProductModal() {
             return getDownloadURL(snapshot.ref).then((url) => { urls.push(url) }).catch((error) => alert(error));
         });
     })
-
-
-
 
 
 
@@ -153,9 +150,9 @@ function ProductModal() {
                                     <FloatingLabel controlId="floatingSelectBrand" label="Select Brand">
                                         <Form.Select aria-label="Please Select a Brand" onChange={(e) => setBrand(e.target.value)}>
                                             <option>Please Select a Brand</option>
-                                            {/* {
+                                            {
                                                 brandVal.map((val, key) => <option key={key} value={val.BrandName}>{val.BrandName}</option>)
-                                            } */}
+                                            }
                                         </Form.Select>
                                     </FloatingLabel>
                                 </Form.Group>
@@ -165,17 +162,14 @@ function ProductModal() {
                                     <FloatingLabel controlId="selectCategory" label="Select Category">
                                         <Form.Select aria-label="Please Select a Category" onChange={(e) => setCategory(e.target.value)}>
                                             <option>Please Select a Category</option>
-                                            {/* {
+                                            {
                                                 CategoryVal.map((val, key) => <option key={key} value={val.CategoryName}>{val.CategoryName}</option>)
-                                            } */}
+                                            }
                                         </Form.Select>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
                         </div>
-
-
-
 
 
                         <FloatingLabel controlId="floatingTextarea2" label="Description" className='mb-3'>
@@ -190,9 +184,7 @@ function ProductModal() {
 
 
 
-
-
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btn-warning">
                             Submit
                         </button>
                     </form>

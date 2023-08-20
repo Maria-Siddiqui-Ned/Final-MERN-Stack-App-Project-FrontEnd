@@ -15,7 +15,7 @@ export default function Category() {
     return (
         <div className="container my-5">
             <div className="text-center">
-                <h2>Category</h2>
+            <h2 className='text-primary'>Categories</h2>
                 <small className="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum delectus magnam doloribus voluptatibus possimus corrupti aliquid itaque harum debitis ipsa!</small>
             </div>
 
