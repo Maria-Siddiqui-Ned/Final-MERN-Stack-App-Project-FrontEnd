@@ -6,7 +6,7 @@ import { AppRoute } from '../../App'
 export default function Products() {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        axios.get(`${AppRoute}api/get-all-products`)
+        axios.get('http://localhost:1234/api/get-all-products')
             .then(json => setProducts(json.data.products))
             .catch(err => console.log(err))
     }, [])
@@ -20,7 +20,7 @@ export default function Products() {
 
             <div className="row my-5">
                 {
-                    products.map((val, key) => <UserCards key={key} image={val.thumbnail} name={val.productName} url={`/products/${val._id}`} />)
+                    products.map((val, key) => <UserCards key={key} image={val.ProductThumbnail} name={val.ProductName} url={`/products/${val._id}`} />)
                 }
 
             </div>

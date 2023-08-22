@@ -93,10 +93,11 @@ export default function LoginForm() {
 
                 </Form.Group>
 
-
+                <div className="d-grid gap-2">
                 <Button variant="primary" className="btn btn-warning" type="submit">
                 Login
                 </Button>
+                </div>
                 <div>
                 <p className='mt-3'>Don't have an account?<a href=''> Signup</a> here.</p>
                 </div>

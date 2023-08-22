@@ -9,6 +9,7 @@ import Profile from './Pages/Profile'
 import ProductsByCategory from './Pages/ProductsByCategory'
 import ProductPage from './Pages/ProductPage'
 import Cart from './Pages/Cart'
+import FooterSection from './Components/FooterSection'
 import { Navigate, Route, Routes } from "react-router-dom";
 
 
@@ -30,6 +31,8 @@ export default function User() {
                 <Route path="/category/:CategoryName" element={<ProductsByCategory />} />
                 <Route path="*" element={<Navigate to='/' replace={true} />} />
             </Routes>
+            <FooterSection/>
+
 
         </>
     )

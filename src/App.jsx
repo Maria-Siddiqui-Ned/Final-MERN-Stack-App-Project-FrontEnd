@@ -6,6 +6,7 @@ import { GlobalContext } from './Context/context'
 import { decodeToken } from 'react-jwt'
 
 
+
 export const AppRoute = '/'
 const ComponentByRoles = {
   'admin': Admin,

@@ -5,6 +5,8 @@ import { storage } from '../utils/FirebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from 'axios';
 import { AppRoute } from '../../App';
+import toast, { Toaster } from 'react-hot-toast';
+const notify = () => toast('Here is your toast.');
 
 function CategoryModal({recallData}) {
     const [show, setShow] = useState(false);
@@ -15,11 +17,10 @@ function CategoryModal({recallData}) {
     const [CategoryName, setCategoryName] = useState("")
     const [CategoryImage, setCategoryImage] = useState(null)
 
+
     const AddCategory = (e) => {
         e.preventDefault();
-
-
-
+        toast.success('Category added Successfully')
         const storageRef = ref(storage, `images/category/${CategoryImage.name}`);
         uploadBytes(storageRef, CategoryImage).then((snapshot) => {
             getDownloadURL(snapshot.ref)
@@ -29,13 +30,14 @@ function CategoryModal({recallData}) {
                         .then((json) => {
                             setShow(false);
                             recallData(json.data.category)
+
                         })
                         .catch(err => alert(err.message))
 
                 })
                 .catch((error) => alert(error.message));
         });
-
+       
     }
 
     return (
@@ -49,7 +51,7 @@ function CategoryModal({recallData}) {
                     <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
+                
                     <form onSubmit={AddCategory}>
                         <div className="mb-3">
                             <label htmlFor="CategoryName" className="form-label">
@@ -76,8 +78,8 @@ function CategoryModal({recallData}) {
 
 
                         <button type="submit" className="btn btn-warning">
-                            Submit
-                        </button>
+                            Submit<Toaster />
+                            </button>
                     </form>
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import GuestCards from './GuestCards'
+import Card from 'react-bootstrap/Card';
 import axios from 'axios'
 
 export default function Brand() {
@@ -19,10 +19,27 @@ export default function Brand() {
             </div>
 
             <div className="row my-5">
-                {
+                {/* {
                     brands.map((val, key) => <GuestCards key={key} image={val.BrandImage} name={val.BrandName} />)
-                }
+                } */}
+                {/* <td><img src={val.ProductThumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td> */}
 
+                {
+                    brands.map((val, key) =>
+
+                        <div className="col-md-2 my-3" key={key}>
+                            <Card  border="primary" bg="warning" >
+                                <Card.Img className="object-fit-" height={150} variant="top" src={val.BrandImage} />
+                                <Card.Body >
+                                    {/* <Card.Title >{val.title} - {val.price}$</Card.Title> */}
+                                    <Card.Title className='text-truncate' >{val.BrandName}</Card.Title>
+                                    <Card.Text  className='text-truncate'>{val.BrandCategory}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

@@ -25,7 +25,7 @@ export default function GuestNavigationBar() {
                     <Nav className="ms-auto">
                         <Link className='nav-link' to="/">Home</Link>
                         <Link className='nav-link' to="/AllProducts">Products</Link>
-                        <Link className='nav-link' to="/AllCategories">Categories</Link>
+                        <Link className='nav-link' to="/category">Categories</Link>
 
                         {/* <NavDropdown title="Items" id="basic-nav-dropdown">
                             {categories.map((val, key) => (

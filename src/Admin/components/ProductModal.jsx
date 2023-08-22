@@ -6,19 +6,24 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import toast, { Toaster } from 'react-hot-toast';
+const notify = () => toast('Here is your toast.');
 
 
 function ProductModal() {
     const [show, setShow] = useState(false);
-    const [brand, setBrand] = useState('')
-    const [category, setCategory] = useState('')
-    const [productName, setProductName] = useState("")
-    const [thumbnail, setThumbnail] = useState(null)
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState(0)
-    const [images, setImages] = useState([])
+    const [ProductBrand, setProductBrand] = useState('')
+    const [ProductCategory, setProductCategory] = useState('')
+    const [ProductName, setProductName] = useState("")
+    const [ProductThumbnail, setProductThumbnail] = useState(null)
+    const [ProductDescription, setProductDescription] = useState("")
+    const [ProductPrice, setProductPrice] = useState(0)
+    const [Stock, setStock] = useState(0)
+    const [ProductImageArray, setProductImageArray] = useState([])
 
-
+   
+     
+     
 
     //API VALUES 
     const [brandVal, setBrandVal] = useState([])
@@ -37,8 +42,8 @@ function ProductModal() {
     }
 
     const urls = []
-    const MultipleImageUpload = () => images?.map((val) => {
-        const MultipleImageRef = ref(storage, `/images/products/${productName}/${val.name}`);
+    const MultipleImageUpload = () => ProductImageArray?.map((val) => {
+        const MultipleImageRef = ref(storage, `/images/products/${ProductName}/${val.name}`);
         return uploadBytes(MultipleImageRef, val).then((snapshot) => {
             return getDownloadURL(snapshot.ref).then((url) => { urls.push(url) }).catch((error) => alert(error));
         });
@@ -48,27 +53,29 @@ function ProductModal() {
 
     const AddProduct = (e) => {
         e.preventDefault();
+        toast.success('Product added Successfully')
         const uploadImages = MultipleImageUpload()
         Promise.all(uploadImages)
             .then(() => {
-                const storageRef = ref(storage, `/images/products/${productName}/${thumbnail.name}`);
+                const storageRef = ref(storage, `/images/products/${ProductName}/${ProductThumbnail.name}`);
                 uploadBytes(storageRef, thumbnail).then((snapshot) => {
                     getDownloadURL(snapshot.ref)
                         .then((url) => {
                             const payload = {
-                                productName,
-                                brand,
-                                category,
-                                price,
-                                images: urls,
-                                thumbnail: url,
-                                description
-
-                            }
+                                ProductName, 
+                                ProductPrice, 
+                                Stock,
+                                ProductCategory,  
+                                ProductBrand ,
+                                ProductThumbnail : url,
+                                ProductImageArray : urls,
+                                ProductDescription 
+                             }
                             // console.log("Ready to hit the API", payload)
 
                             axios.post('http://localhost:1234/api/add-products', payload).then((json) => {
                                 console.log(json.data)
+
                                 setShow(false)
                             })
                                 .catch(err => console.log(err))
@@ -78,11 +85,7 @@ function ProductModal() {
                 });
             })
             .catch(err => console.log(err))
-
-
-
-
-    }
+   }
 
     return (
         <>
@@ -99,15 +102,23 @@ function ProductModal() {
                     <form onSubmit={AddProduct}>
 
 
-                        <div className="row">
+                        <div className="mb-3">
                             <div className="col">
                                 <FloatingLabel controlId="productname" label="Product Name" className="mb-3 text-secondary"                                >
-                                    <Form.Control type="text" placeholder="Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                                    <Form.Control type="text" placeholder="Product Name" value={ProductName} onChange={(e) => setProductName(e.target.value)} />
+                                </FloatingLabel>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                        <div className="col">
+                                <FloatingLabel controlId="price" label="Product Price ($)" className="mb-3 text-secondary"                                >
+                                    <Form.Control type="number" placeholder="Product Price" value={ProductPrice} onChange={(e) => setProductPrice(e.target.value)} />
                                 </FloatingLabel>
                             </div>
                             <div className="col">
-                                <FloatingLabel controlId="price" label="Product Price ($)" className="mb-3 text-secondary"                                >
-                                    <Form.Control type="number" placeholder="Product Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+                                <FloatingLabel controlId="stock" label="Product Stock" className="mb-3 text-secondary"                                >
+                                    <Form.Control type="number" placeholder="Stock" value={Stock} onChange={(e) => setStock(e.target.value)} />
                                 </FloatingLabel>
                             </div>
                         </div>
@@ -117,7 +128,7 @@ function ProductModal() {
                             <label htmlFor="thumbnail" className="form-label">
                                 Product Thumbnail
                             </label>
-                            <input className="form-control" onChange={(e) => setThumbnail(e.target.files[0])} type="file" id="thumbnail" />
+                            <input className="form-control" onChange={(e) => setProductThumbnail(e.target.files[0])} type="file" id="thumbnail" />
                         </div>
 
                         <div className="mb-3">
@@ -126,7 +137,7 @@ function ProductModal() {
                             <small className="text-secondary">Double Click to Delete Images</small>
                             <div className="mt-2 d-flex gap-2 align-items-center">
                                 {
-                                    images.map((val, key) =>
+                                    ProductImageArray.map((val, key) =>
                                         <div key={key} className="bg-light border rounded col-md-1"
                                             onDoubleClick={() => setImages(images.filter((img) => img != val))}>
                                             <img style={{ height: '10vh', cursor: 'pointer', objectFit: 'contain' }}
@@ -139,7 +150,7 @@ function ProductModal() {
                             </div>
 
 
-                            <input className="form-control d-none" onChange={(e) => setImages([...images, e.target.files[0]])} type="file" id="formFile" />
+                            <input className="form-control d-none" onChange={(e) => setProductImageArray([...ProductImageArray, e.target.files[0]])} type="file" id="formFile" />
                         </div>
 
 
@@ -148,7 +159,7 @@ function ProductModal() {
                                 <Form.Group className="mb-3" >
 
                                     <FloatingLabel controlId="floatingSelectBrand" label="Select Brand">
-                                        <Form.Select aria-label="Please Select a Brand" onChange={(e) => setBrand(e.target.value)}>
+                                        <Form.Select aria-label="Please Select a Brand" onChange={(e) => setProductBrand(e.target.value)}>
                                             <option>Please Select a Brand</option>
                                             {
                                                 brandVal.map((val, key) => <option key={key} value={val.BrandName}>{val.BrandName}</option>)
@@ -160,7 +171,7 @@ function ProductModal() {
                             <div className="col">
                                 <Form.Group className="mb-3" >
                                     <FloatingLabel controlId="selectCategory" label="Select Category">
-                                        <Form.Select aria-label="Please Select a Category" onChange={(e) => setCategory(e.target.value)}>
+                                        <Form.Select aria-label="Please Select a Category" onChange={(e) => setProductCategory(e.target.value)}>
                                             <option>Please Select a Category</option>
                                             {
                                                 CategoryVal.map((val, key) => <option key={key} value={val.CategoryName}>{val.CategoryName}</option>)
@@ -174,8 +185,8 @@ function ProductModal() {
 
                         <FloatingLabel controlId="floatingTextarea2" label="Description" className='mb-3'>
                             <Form.Control
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={ProductDescription}
+                                onChange={(e) => setProductDescription(e.target.value)}
                                 as="textarea"
                                 placeholder="Leave a comment here"
                                 style={{ height: '100px' }}
@@ -185,7 +196,7 @@ function ProductModal() {
 
 
                         <button type="submit" className="btn btn-warning">
-                            Submit
+                            Submit<Toaster />
                         </button>
                     </form>
                 </Modal.Body>

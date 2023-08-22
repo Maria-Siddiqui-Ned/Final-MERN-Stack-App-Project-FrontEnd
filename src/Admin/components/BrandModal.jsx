@@ -7,6 +7,8 @@ import axios from 'axios';
 import { AppRoute } from '../../App';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import toast, { Toaster } from 'react-hot-toast';
+const notify = () => toast('Here is your toast.');
 
 function BrandModal({recallData}) {
     const [show, setShow] = useState(false);
@@ -32,6 +34,7 @@ function BrandModal({recallData}) {
 
     const AddBrand = (e) => {
         e.preventDefault();
+        toast.success('Brand added Successfully')
         const storageRef = ref(storage, `images/brand/${BrandImage.name}`);
         uploadBytes(storageRef, BrandImage).then((snapshot) => {
             getDownloadURL(snapshot.ref)
@@ -41,6 +44,7 @@ function BrandModal({recallData}) {
                         .then((json) => {
                             setShow(false);
                             recallData(json.data.brand)
+
                         })
                         .catch(err => alert(err.message))
 
@@ -101,7 +105,7 @@ function BrandModal({recallData}) {
 
 
                         <button type="submit" className="btn btn-warning">
-                            Submit
+                            Submit<Toaster />
                         </button>
                     </form>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BrandModal from '../components/BrandModal'
 import axios from 'axios'
-import { BsFillPencilFill } from 'react-icons/bs'
+// import { BsFillPencilFill } from 'react-icons/bs'
 import { AiFillDelete } from 'react-icons/ai'
 export default function Brand() {
 
@@ -14,7 +14,21 @@ export default function Brand() {
 
     }, [])
 
-    const deleteProduct = (BrandName) => { console.log(BrandName) }
+    const deleteProduct = (_id) => {
+        console.log(_id)
+        const payload = { _id }
+
+
+        let config = {
+            method: 'delete',
+            url: 'http://localhost:1234/api/delete-brand',
+            data: payload
+        };
+
+
+        axios(config).then(json => console.log(json.data)).catch(err => console.log(err))
+
+    }
 
 
 
@@ -33,7 +47,8 @@ export default function Brand() {
                             <th scope="col">Brand Name</th>
                             <th scope="col">Brand Logo</th>
                             <th scope="col">Brand Category</th>
-                            <th scope="col">Actions</th>
+                          {/* <th scope="col">Actions</th> */}
+                          <th scope="col"><small className="small">(Refresh after delete.)</small></th>
 
 
                         </tr>
@@ -47,8 +62,8 @@ export default function Brand() {
                                     <td><img src={val.BrandImage} className='img-fluid' style={{ height: '5vh', objectFit: 'contain' }} alt="" srcSet="" /></td>
                                     <td>{val.BrandCategory}</td>
                                     <td>
-                                        <button className="btn btn-dark mx-1"><BsFillPencilFill /></button>
-                                        <button className="btn btn-dark mx-1" onClick={() => deleteProduct(val.BrandName)}><AiFillDelete /></button>
+                                        {/* <button className="btn btn-dark mx-1"><BsFillPencilFill /></button> */}
+                                        <button className="btn btn-dark mx-1" onClick={() => deleteProduct(val._id)}><AiFillDelete /></button>
                                     </td>
                                 </tr>)
                         }
