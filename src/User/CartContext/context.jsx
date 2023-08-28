@@ -24,9 +24,12 @@ export default function CartContextProvider({ children }) {
         localStorage.setItem('cart', JSON.stringify(cart_state.cart))
     }, [cart_state.cart])
 
+    const removeFromCart = () => {
+        cart_dispatch({
+            type: 'REMOVE_FROM_CART'})
+        };
 
-
-
+  
     return (
         <CartContext.Provider value={{ cart_state, cart_dispatch }}>
             {children}

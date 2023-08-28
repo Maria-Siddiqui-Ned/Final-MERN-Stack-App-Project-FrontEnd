@@ -1,6 +1,6 @@
 import React from 'react'
 import UserNavigationBar from './Components/UserNavigationBar'
-import Brands from './Pages/Brands'
+import BrandsPage from './Pages/BrandsPage'
 import Category from './Pages/Category'
 import Home from './Pages/Home'
 import Products from './Pages/Products'
@@ -21,7 +21,7 @@ export default function User() {
             <UserNavigationBar />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/brands" element={<Brands />} />
+                <Route path="/brands" element={<BrandsPage />} />
                 <Route path="/brands/:BrandName" element={<ProductsByBrand />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/cart" element={<Cart />} />

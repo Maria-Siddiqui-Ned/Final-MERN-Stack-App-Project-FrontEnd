@@ -4,20 +4,30 @@ import Cookies from 'js-cookie'
 import { GlobalContext } from '../../Context/context'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom'
 
 
 export default function LoginForm() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [validated, setValidated] = useState(false);
     const { state, dispatch } = useContext(GlobalContext)
+
+    //form validation function
+    const [validated, setValidated] = useState(false);
+    const handleSubmit = (e) => {
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        setValidated(true);
+        loginUser(e)
+    };
 
     const loginUser = (e) => {
         e.preventDefault();
-
         const payload = { email, password }
-
         axios.post('http://localhost:1234/api/login', payload)
             .then((json) => {
                 Cookies.set('token', json.data.token)
@@ -28,33 +38,13 @@ export default function LoginForm() {
             })
             .catch(err => console.log(err))
     }
-    // const handleSubmit = (e) => {
-    //     const form = e.currentTarget;
-    //     if (form.checkValidity() === false) {
-    //       e.preventDefault();
-    //       e.stopPropagation();
-    //     }
-    
-    //     else if(form.checkValidity() === true) {
-    //         const payload = { email, password }
-    //             axios.post('http://localhost:1234/api/login', payload)
-    //                 .then((json) => {
-    //                     Cookies.set('token', json.data.token)
-    //                     dispatch({
-    //                         type: "USER_LOGIN",
-    //                         token: json.data.token
-    //                     })
-    //                 })
-    //                 .catch(err => console.log(err))
-    //         }
-    //     }
-    //     setValidated(true);
+
     return (
 
         <div className="container my-5 d-flex justify-content-center align-item-center">
 
             {/* <Form  noValidate validated={validated} onSubmit={handleSubmit}> */}
-            <Form onSubmit={loginUser}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <h3>Welcome to Let's Shop! Please login to continue.</h3>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -94,12 +84,13 @@ export default function LoginForm() {
                 </Form.Group>
 
                 <div className="d-grid gap-2">
-                <Button variant="primary" className="btn btn-warning" type="submit">
-                Login
-                </Button>
+                    <Button variant="primary" className="btn btn-warning" type="submit">
+                        Login
+                    </Button>
                 </div>
                 <div>
-                <p className='mt-3'>Don't have an account?<a href=''> Signup</a> here.</p>
+                    <p className='mt-3'>Don't have an account?
+                        <Link to='/signup'> Signup</Link> here. </p>
                 </div>
             </Form>
 

@@ -13,7 +13,8 @@ export default function Products() {
         axios.get("http://localhost:1234/api/get-all-products")
             .then(json => setProduct(json.data.products))
             .catch(err => console.log(err.message))
-    })
+    }, [Product]
+    )
 
 
     const deleteproduct = (_id) => {
@@ -59,9 +60,9 @@ export default function Products() {
                     </thead>
                     <tbody>
                         {
-                            Product.map((val, key) =>
+                            Product?.map((val, key) =>
                                 <tr key={key}>
-                                    <td><img src={val.ProductThumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1, objectFit: 'contain' }} alt="" srcSet="" /></td>
+                                    <td><img src={val.ProductThumbnail} className='img-fluid rounded-circle border border-secondary' style={{ height: '10vh', aspectRatio: 1 / 1 }} alt="" srcSet="" /></td>
                                     <td>{val.ProductName}</td>
                                     <td>{val.ProductCategory}</td>
                                     <td>{val.ProductBrand}</td>

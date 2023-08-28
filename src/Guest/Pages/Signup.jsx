@@ -5,7 +5,9 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import toast, { Toaster } from 'react-hot-toast';
+const notify = () => toast('Here is your toast.');
+
 
 // import { useNavigate } from "react-router-dom";
 
@@ -27,20 +29,22 @@ function SignUp() {
       e.stopPropagation();
     }
     setValidated(true);
+    SignupUser(e)
   };
 
 
   const SignupUser = (e) => {
     e.preventDefault();
+
     const payload = { firstname, lastname, city, area, email, password }
 
     axios.post('http://localhost:1234/api/signup', payload)
-      .then((json) => console.log(json.data))
-    Swal.fire({
-      title: 'SignUp Successfully!',
-      icon: 'success',
-      confirmButtonText: 'Login'
-    })
+      .then((json) => {console.log(json.data);
+            toast.success('Signup Successfull')
+            })
+      
+      
+    
       .catch(err => console.log(err))
 
     // const account = users.find((user) => user.username === username);
@@ -54,8 +58,8 @@ function SignUp() {
 return (
     <div className="container my-5 d-flex justify-content-center align-item-center">
 
-      <Form onSubmit={SignupUser}>
-        {/* <Form noValidate validated={validated} onSubmit={handleSubmit}> */}
+      {/* <Form onSubmit={SignupUser}> */}
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {/* <Form onSubmit={SignupUser}> */}
         <h3>Create your Let's ShopPk Account!!</h3>
         <Row className="mb-3 my-3" >
@@ -174,7 +178,7 @@ return (
           />
         </Form.Group> */}
         <div className="d-grid gap-2">
-          <Button type="submit" className="btn btn-warning">Signup</Button>
+          <Button type="submit" className="btn btn-warning">Signup<Toaster/></Button>
         </div>
       </Form>
     </div>

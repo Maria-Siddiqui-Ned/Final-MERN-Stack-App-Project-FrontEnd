@@ -7,23 +7,29 @@ import { GlobalContext } from '../../Context/context'
 import Cookies from 'js-cookie';
 import { BsCart4 } from 'react-icons/bs'
 import { decodeToken } from 'react-jwt'
+import axios from 'axios'
+
 
 
 
 export default function UserNavigationBar() {
 
+      
     const { state, dispatch } = useContext(GlobalContext)
 
     const user = decodeToken(state.token)
-    console.log(user)
     const ProfileEmail = user.email
-    // const [User, setUser] = useState()
+    const [User, setUser] = useState()
 
-    //  useEffect(() => {
-    //      axios.get(`localhost:1234/api/get-users-by-email?email={uuser.email}`)
-    //          .then(json => setUser(json.data.user))
-    //         .catch(err => console.log(err))
-    //  }, [])
+     useEffect(() => {
+         axios.get(`http://localhost:1234/api/get-users-by-email?email={user.email}`)
+             .then(json => {
+                setUser(json.data.user);
+                console.log(json.data.user)
+
+             })
+            .catch(err => console.log(err))
+     }, [])
 
     return (
         <Navbar expand="lg" bg="warning">
@@ -34,7 +40,7 @@ export default function UserNavigationBar() {
                     <Nav className="ms-auto">
                         <Link to='/' className='nav-link'>Home</Link>
                         <Link to='/brands' className='nav-link'>Brands</Link>
-                        <Link to='/products' className='nav-link'>Products</Link>
+                        <Link to='/products' className='nav-link'>All Products</Link>
                         <Link to='/category' className='nav-link'>Category</Link>
                     </Nav>
 
@@ -44,7 +50,7 @@ export default function UserNavigationBar() {
                             Hi {ProfileEmail}
                         </Link>
 
-                        <Link to='/cart'><img height={40} width={40} src='https://cdn-icons-png.flaticon.com/512/487/487932.png'/></Link>
+                        <Link to='/cart'><img height={40} width={40}   src='https://cdn-icons-png.flaticon.com/512/487/487932.png'/></Link>
                         <button className="btn btn-dark"
                             onClick={() => {
                                 Cookies.remove('token')

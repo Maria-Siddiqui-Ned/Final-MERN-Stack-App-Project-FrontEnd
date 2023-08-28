@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import Category from './pages/Category'
 import Products from './pages/Products'
 import Brands from './pages/Brands'
+import Orders from './pages/Orders'
+
 
 import { Route, Routes } from "react-router-dom";
 
@@ -19,6 +21,7 @@ export default function Admin() {
                     <Route path="/category" element={<Category />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/brands" element={<Brands />} />
+                    <Route path="/orders" element={<Orders />} />
 
                     <Route path="*" element={<Home />} />
                 </Routes>

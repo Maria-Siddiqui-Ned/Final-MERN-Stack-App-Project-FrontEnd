@@ -12,7 +12,7 @@ const notify = () => toast('Here is your toast.');
 
 function BrandModal({recallData}) {
     const [show, setShow] = useState(false);
-    const [BrandName, setBrandName] = useState("")
+    const [BrandName, setBrandName] = useState(null)
     const [BrandCategory, setBrandCategory] = useState("")
     const [BrandImage, setBrandImage] = useState(null)
 
@@ -28,13 +28,11 @@ function BrandModal({recallData}) {
              setShow(true);
         
      }).catch(err => console.log(err))
-
  }
-
 
     const AddBrand = (e) => {
         e.preventDefault();
-        toast.success('Brand added Successfully')
+        toast.success('Brand added Successfully');
         const storageRef = ref(storage, `images/brand/${BrandImage.name}`);
         uploadBytes(storageRef, BrandImage).then((snapshot) => {
             getDownloadURL(snapshot.ref)

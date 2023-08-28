@@ -1,50 +1,49 @@
 import React, { useEffect, useState } from 'react'
-import UserCards from '../Components/UserCards'
 import axios from 'axios'
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom'
 
 
 
-export default function Category() {
-    const [category, setCategory] = useState([])
+export default function BrandsPage() {
+    
+    const [brands, setbrands] = useState([])
+
     useEffect(() => {
-        axios.get('http://localhost:1234/api/get-all-categories')
-            .then(json => setCategory(json.data.category))
-
+        axios.get('http://localhost:1234/api/get-all-brands')
+            .then(json => setbrands(json.data.brand))
             .catch(err => alert(err.message))
-
     }, [])
 
     return (
         <div className="container my-5">
             <div className="text-center">
-            <h2 className='text-primary'>Categories</h2>
+                <h2>Brands</h2>
                 <small className="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum delectus magnam doloribus voluptatibus possimus corrupti aliquid itaque harum debitis ipsa!</small>
             </div>
 
             <div className="row my-5">
-            {
-                   category.map((val, key) =>
+                {
+                    brands.map((val, key) =>
 
-                        <div className="col-md-3 my-2 align-items-center" key={key}>
-            {/* <div className=" d-flex flex-column"> */}
+                        <div className="col-md-2 my-3" key={key}>
                             {/* <Link className='text-decoration-none' to='/brands/:BrandName'>                            <Link className='text-decoration-none' to='/brands/:BrandName'> */}
-                            <Link className='text-decoration-none' to={`/category/${val.CategoryName}`}>
+                            <Link className='text-decoration-none' to={`/brands/${val.BrandName}`}>
                             <Card  border="primary" bg="warning" >
-                                <Card.Img className="object-fit-" height={200} variant="top" src={val.CategoryImage} />
+                                <Card.Img className="object-fit-" height={150} variant="top" src={val.BrandImage} />
                                 <Card.Body >
                                     {/* <Card.Title >{val.title} - {val.price}$</Card.Title> */}
-                                    <Card.Title className='text-truncate' >{val.CategoryName}</Card.Title>
+                                    <Card.Title className='text-truncate' >{val.BrandName}</Card.Title>
+                                    <Card.Text  className='text-truncate'>{val.BrandCategory}
+                                    </Card.Text>
                                 </Card.Body>
                             </Card>
                             </Link>
                         </div>
                     )
                 }
-                
-                    
             </div>
         </div>
     )
 }
+

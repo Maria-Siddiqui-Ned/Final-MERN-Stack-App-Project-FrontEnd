@@ -33,6 +33,11 @@ export default function Sidebar() {
             icon: <TbBrandGooglePhotos />
         },
 
+        {
+            tab: "Orders",
+            url: "/orders",
+            icon: <TbBrandGooglePhotos />
+        },
     ]
 
 

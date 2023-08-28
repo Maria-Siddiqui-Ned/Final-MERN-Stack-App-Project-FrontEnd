@@ -20,7 +20,7 @@ export default function Products() {
 
             <div className="row my-5">
                 {
-                    products.map((val, key) => <UserCards key={key} image={val.ProductThumbnail} name={val.ProductName} url={`/products/${val._id}`} />)
+                    products.map((val, key) => <UserCards key={key} name={val.ProductName} image={val.ProductThumbnail} url={`/products/${val._id}`} description={val.ProductDescription} price={val.ProductPrice}/>)
                 }
 
             </div>
